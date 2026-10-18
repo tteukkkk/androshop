@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <h2 class="login-title">Acesse sua conta</h2>
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Usuário</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">Senha</label>
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn">Entrar</button>
+        </form>
+        <div class="login-links">
+            <span>Não tem conta?</span>
+            <a href="{% url 'cadastro' %}" class="btn-secondary">Cadastre-se</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

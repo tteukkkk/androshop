@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{% url 'lista_produtos' %}" class="btn btn-secondary">← Voltar ao catálogo</a>
+<div class="detalhe-container">
+    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="produto-detalhe-imagem">
+    <div class="detalhe-info">
+        <h2>{{ produto.nome }}</h2>
+        <p>{{ produto.descricao }}</p>
+        <p><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+        <p><strong>Estoque:</strong> {{ produto.estoque }}</p>
+        <p>
+            {% if produto.qtd_avaliacoes %}
+                ⭐ {{ produto.media_avaliacoes }}/5 ({{ produto.qtd_avaliacoes }} avaliações)
+            {% else %}
+                Ainda não avaliado
+            {% endif %}
+        </p>
+        <form action="{% url 'adicionar_ao_carrinho' produto.id %}" method="get">
+            <button type="submit">Adicionar ao Carrinho</button>
+        </form>
+    </div>
+</div>
+{% if user.is_authenticated %}
+<hr>
+<h4>Avalie este produto</h4>
+<form action="{% url 'avaliar_produto' produto.id %}" method="post" class="avaliacao-form">
+    {% csrf_token %}
+    <label for="nota">Nota:</label>
+    <select name="nota" id="nota" required>
+        {% for i in "12345" %}
+            <option value="{{ i }}">{{ i }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="comentario">Comentário:</label><br>
+    <textarea name="comentario" id="comentario" cols="30" rows="3"></textarea><br>
+    <button type="submit">Enviar avaliação</button>
+</form>
+{% else %}
+<p>Faça <a href="{% url 'login' %}">login</a> para avaliar!</p>
+{% endif %}
+<hr>
+<h4>Avaliações:</h4>
+{% for av in avaliacoes %}
+    <div class="avaliacao-item">
+        <p><strong>{{ av.usuario.username }}</strong> — ⭐ {{ av.nota }}</p>
+        <p>{{ av.comentario|default:"Sem comentário" }}</p>
+        <small>{{ av.data|date:"d/m/Y H:i" }}</small>
+    </div>
+{% empty %}
+    <p>Seja o primeiro a avaliar este produto!</p>
+{% endfor %}
+{% endblock %}

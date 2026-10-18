@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <h2 class="login-title">Crie sua conta</h2>
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="help-text">{{ field.help_text|safe }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <small class="error-text">{{ field.errors }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn">Cadastrar</button>
+        </form>
+        <div class="login-links">
+            <span>Já tem conta?</span>
+            <a href="{% url 'login' %}" class="btn-secondary">Entrar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

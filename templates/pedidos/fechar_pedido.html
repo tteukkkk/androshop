@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="checkout-container">
+    <h2 class="checkout-title">🧾 Fechar Pedido</h2>
+    <table class="checkout-table">
+        <tr>
+            <th>Produto</th>
+            <th>Qtd</th>
+            <th>Subtotal</th>
+        </tr>
+        {% for item in produtos %}
+        <tr>
+            <td>{{ item.produto.nome }}</td>
+            <td>{{ item.quantidade }}</td>
+            <td>R$ {{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="checkout-total">
+            <td colspan="2" align="right"><b>Total:</b></td>
+            <td><b>R$ {{ total }}</b></td>
+        </tr>
+        {% if desconto > 0 %}
+        <tr class="checkout-desconto">
+            <td colspan="2" align="right"><b>Desconto:</b></td>
+            <td>- R$ {{ desconto }}</td>
+        </tr>
+        {% endif %}
+        <tr class="checkout-final">
+            <td colspan="2" align="right"><b>Total Final:</b></td>
+            <td><b>R$ {{ total_final }}</b></td>
+        </tr>
+    </table>
+    <form method="post" class="checkout-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="forma_pagamento">Forma de pagamento:</label>
+            <select name="forma_pagamento" id="forma_pagamento" required>
+                <option value="credito">Cartão de Crédito</option>
+                <option value="debito">Cartão de Débito</option>
+                <option value="pix">Pix</option>
+                <option value="boleto">Boleto</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cupom">Cupom de desconto:</label>
+            <input type="text" name="cupom" id="cupom" placeholder="Digite seu cupom..." value="{{ cupom_codigo|default:'' }}">
+        </div>
+        <button type="submit" class="btn btn-destaque" name="acao" value="finalizar">Finalizar pedido</button>
+        <a href="{% url 'carrinho' %}" class="btn-secondary" style="margin-left:15px;">Voltar ao carrinho</a>
+    </form>
+</div>
+{% endblock %}

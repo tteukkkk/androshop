@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="perfil-container">
+    <div class="perfil-card">
+        <div class="perfil-info">
+            <h2 class="perfil-title">Meu Perfil</h2>
+            <p class="perfil-nome">Bem-vindo, <span class="perfil-username">{{ usuario.username }}</span>!</p>
+            <ul class="perfil-dados">
+                <li><b>Email:</b> {{ usuario.email }}</li>
+            </ul>
+            <div class="perfil-botoes">
+                <a href="{% url 'meus_pedidos' %}" class="btn">Ver meus pedidos</a>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary">Sair</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

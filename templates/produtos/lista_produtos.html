@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="catalogo-container">
+    <h2 class="catalogo-title">Catálogo de Produtos</h2>
+    <form method="get" action="{% url 'lista_produtos' %}" class="filtros-form">
+        <div class="filtros-grid">
+            <div class="filtro-group">
+                <label>Categoria:</label>
+                <select name="categoria" class="filtro-select">
+                    <option value="">Todas</option>
+                    {% for cat in categorias %}
+                        <option value="{{ cat.id }}" {% if request.GET.categoria == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="filtro-group">
+                <label>Preço:</label>
+                <div class="preco-range">
+                    <input type="number" name="preco_min" placeholder="Mín." value="{{ request.GET.preco_min }}" class="filtro-input">
+                    <span>a</span>
+                    <input type="number" name="preco_max" placeholder="Máx." value="{{ request.GET.preco_max }}" class="filtro-input">
+                </div>
+            </div>
+            <div class="filtro-group">
+                <label>Avaliação:</label>
+                <select name="avaliacao_min" class="filtro-select">
+                    <option value="">Qualquer</option>
+                    {% for i in "12345" %}
+                        <option value="{{ i }}" {% if request.GET.avaliacao_min == i|stringformat:"s" %}selected{% endif %}>{{ i }}+ ⭐</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="filtro-group filtro-actions">
+                <button type="submit" class="filtro-btn">Filtrar</button>
+                {% if request.GET %}
+                    <a href="{% url 'lista_produtos' %}" class="limpar-filtros">Limpar filtros</a>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+    <nav class="categorias-nav">
+        <ul>
+            <li><a href="{% url 'lista_produtos' %}" class="{% if not categoria_ativa %}active{% endif %}">Todos</a></li>
+            {% for cat in categorias %}
+                <li>
+                    <a href="{% url 'lista_produtos_categoria' cat.slug %}" class="{% if categoria_ativa and cat == categoria_ativa %}active{% endif %}">{{ cat.nome }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <div class="produtos-grid">
+        {% for produto in produtos %}
+            <div class="produto-card {% if produto.destaque %}destaque{% endif %}">
+                <a href="{% url 'detalhe_produto' produto.id %}" class="produto-link">
+                    <div class="produto-imagem-container">
+                        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="produto-imagem">
+                        {% if produto.destaque %}
+                            <span class="destaque-badge">⭐ Destaque</span>
+                        {% endif %}
+                    </div>
+                    <div class="produto-info">
+                        <h3 class="produto-nome">{{ produto.nome }}</h3>
+                        <p class="produto-preco">R$ {{ produto.preco|floatformat:2 }}</p>
+                        <div class="produto-avaliacao">
+                            {% if produto.qtd_avaliacoes %}
+                                <div class="estrelas" style="--rating: {{ produto.media_avaliacoes }};">★★★★★</div>
+                                <span>({{ produto.qtd_avaliacoes }})</span>
+                            {% else %}
+                                <span class="sem-avaliacao">Sem avaliações</span>
+                            {% endif %}
+                        </div>
+                        {% if produto.estoque <= 5 and produto.estoque > 0 %}
+                            <p class="estoque-baixo">Últimas {{ produto.estoque }} unidades!</p>
+                        {% elif produto.estoque == 0 %}
+                            <p class="esgotado">Produto esgotado</p>
+                        {% endif %}
+                    </div>
+                </a>
+                <form action="{% url 'adicionar_ao_carrinho' produto.id %}" method="get" class="produto-form">
+                    {% if produto.estoque > 0 %}
+                        <button type="submit" class="btn-comprar"><span class="btn-icon">🛒</span> Adicionar</button>
+                    {% else %}
+                        <button type="button" class="btn-esgotado" disabled>Esgotado</button>
+                    {% endif %}
+                </form>
+            </div>
+        {% empty %}
+            <div class="nenhum-produto">
+                <p>Nenhum produto encontrado com esses critérios.</p>
+                <a href="{% url 'lista_produtos' %}" class="btn-voltar">Ver todos os produtos</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

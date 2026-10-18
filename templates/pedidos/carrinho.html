@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="cart-container">
+    <h2 class="cart-title">🛒 Carrinho de Compras</h2>
+    {% if produtos %}
+    <table class="cart-table">
+        <tr>
+            <th>Produto</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Subtotal</th>
+            <th>Ações</th>
+        </tr>
+        {% for item in produtos %}
+        <tr>
+            <td>
+                <img src="{{ item.produto.imagem.url }}" alt="{{ item.produto.nome }}" class="cart-thumb">
+                <span class="cart-prod-nome">{{ item.produto.nome }}</span>
+            </td>
+            <td>R$ {{ item.produto.preco }}</td>
+            <td>
+                <form action="{% url 'atualizar_quantidade' item.produto.id %}" method="post" class="cart-qtd-form">
+                    {% csrf_token %}
+                    <input type="number" name="quantidade" value="{{ item.quantidade }}" min="1" max="{{ item.produto.estoque }}">
+                    <button type="submit" class="btn">Atualizar</button>
+                </form>
+            </td>
+            <td><b>R$ {{ item.subtotal }}</b></td>
+            <td>
+                <a href="{% url 'remover_do_carrinho' item.produto.id %}" class="btn btn-danger">Remover</a>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr class="cart-total-row">
+            <td colspan="3" style="text-align:right;"><b>Total:</b></td>
+            <td colspan="2"><b>R$ {{ total }}</b></td>
+        </tr>
+    </table>
+    <div class="cart-actions">
+        <a href="{% url 'lista_produtos' %}" class="btn-secondary">← Continuar comprando</a>
+        <a href="{% url 'fechar_pedido' %}" class="btn btn-destaque">Finalizar compra</a>
+    </div>
+    {% else %}
+    <div class="cart-empty">
+        <p>Seu carrinho está vazio.</p>
+        <a href="{% url 'lista_produtos' %}" class="btn">Ver produtos</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

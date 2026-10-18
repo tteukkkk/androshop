@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="home-banner">
+    <h1>Bem-vindo à <span class="logo-text">AndroShop <span class="andro17">17</span>&<span class="andro18">18</span></span></h1>
+    <h1 style="font-size: 20px">O melhor do universo Android está aqui.</h1>
+    <div class="cta-container">
+        <a href="{% url 'lista_produtos' %}" class="btn-destaque pulse-effect"><span class="btn-icon">⚡</span> Ver Produtos</a>
+    </div>
+</div>
+<section class="destaques">
+    <h2 class="section-title">Por que escolher a AndroShop?</h2>
+    <div class="cards">
+        <div class="card andro17">
+            <div class="card-icon">🚀</div>
+            <h3>Velocidade e Força</h3>
+            <p>Produtos com performance e durabilidade nível Android 17, capazes de acompanhar seu ritmo.</p>
+        </div>
+        <div class="card andro18">
+            <div class="card-icon">💎</div>
+            <h3>Design e Inteligência</h3>
+            <p>Estilo inconfundível e tecnologia smart, a cara da Android 18, para quem exige excelência.</p>
+        </div>
+        <div class="card fusion">
+            <div class="card-icon">♾️</div>
+            <h3>Energia Infinita</h3>
+            <p>Ofertas e novidades sem limites para você dominar o mercado com nosso poder combinado!</p>
+        </div>
+    </div>
+</section>
+<section class="novidades">
+    <h2 class="section-title">Novidades do Universo Android</h2>
+    <div class="news-ticker">
+        <div class="ticker-item andro17-bg">Nova linha de smartphones com resistência nível 17</div>
+        <div class="ticker-item andro18-bg">Acessórios exclusivos inspirados no estilo 18</div>
+        <div class="ticker-item fusion-bg">Combos com até 30% de desconto</div>
+    </div>
+</section>
+{% endblock %}

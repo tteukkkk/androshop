@@ -1,0 +1,160 @@
+/* Login estilizado */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 30px 0;
+}
+.login-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 40px rgba(32, 178, 217, 0.11), 0 1.5px 4px rgba(32, 178, 217, 0.05);
+  padding: 38px 40px 32px;
+  min-width: 340px;
+  max-width: 410px;
+  border-top: 4px solid var(--andro17-blue);
+  border-bottom: 4px solid var(--andro18-gold);
+  margin: 20px auto;
+}
+.login-title {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  background: var(--tech-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2em;
+  margin-bottom: 32px;
+  letter-spacing: 1.5px;
+}
+.login-form .form-group {
+  margin-bottom: 18px;
+}
+.login-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--andro17-dark);
+}
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1em;
+  background: #f6f9fc;
+  border-radius: 8px;
+  border: 1.5px solid #e0e0e0;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.login-form input:focus {
+  border-color: var(--andro17-blue);
+  box-shadow: 0 0 0 3px rgba(32, 178, 217, 0.08);
+}
+.login-form .btn {
+  width: 100%;
+  margin-top: 14px;
+}
+.login-links {
+  text-align: center;
+  margin-top: 20px;
+}
+.login-links span {
+  color: var(--cyber-gray);
+  margin-right: 8px;
+  font-size: 1em;
+}
+.btn-secondary {
+  background: var(--andro18-gold);
+  color: var(--andro17-dark);
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 8px 18px;
+  margin-left: 4px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-secondary:hover,
+.login-form .btn:hover {
+  background: var(--andro17-blue);
+  color: #fff;
+}
+.help-text {
+  display: block;
+  font-size: 0.85em;
+  color: var(--cyber-gray);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.error-text {
+  display: block;
+  font-size: 0.85em;
+  color: #d32f2f;
+  margin-top: 4px;
+}
+.perfil-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+.perfil-card {
+  width: 100%;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 32px 34px;
+  box-shadow: 0 16px 38px rgba(32, 178, 217, 0.09);
+  border: 1px solid rgba(32, 178, 217, 0.12);
+}
+.perfil-info {
+  display: grid;
+  gap: 18px;
+}
+.perfil-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  margin: 0;
+  color: var(--andro17-dark);
+}
+.perfil-nome {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--cyber-black);
+}
+.perfil-username {
+  font-weight: 700;
+  color: var(--andro17-blue);
+}
+.perfil-dados {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.perfil-dados li {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(32, 178, 217, 0.08);
+  color: var(--cyber-gray);
+}
+.perfil-dados li b {
+  color: var(--andro17-dark);
+}
+.perfil-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.perfil-botoes .btn {
+  min-width: 170px;
+}
+@media (max-width: 600px) {
+  .login-card {
+    min-width: 90vw;
+    padding: 22px 18px 20px;
+  }
+  .perfil-card {
+    padding: 24px 20px;
+  }
+  .perfil-botoes {
+    flex-direction: column;
+  }
+}

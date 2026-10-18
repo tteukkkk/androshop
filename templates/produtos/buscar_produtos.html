@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Busca de Produtos</h2>
+<form action="{% url 'buscar_produtos' %}" method="get" class="search-page-form">
+    <input type="text" name="q" value="{{ query }}" placeholder="Buscar produtos..." required>
+    <button type="submit">Buscar</button>
+</form>
+<hr>
+{% if produtos %}
+    <p>{{ produtos|length }} produto(s) encontrado(s) para "<b>{{ query }}</b>"</p>
+    <div class="produtos-grid">
+        {% for produto in produtos %}
+            <article class="produto-card">
+                <a href="{% url 'detalhe_produto' produto.id %}">
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="produto-thumb">
+                    <h4>{{ produto.nome }}</h4>
+                </a>
+                <p>R$ {{ produto.preco }}</p>
+                <p>
+                    {% if produto.qtd_avaliacoes %}
+                        ⭐ {{ produto.media_avaliacoes }}/5 ({{ produto.qtd_avaliacoes }})
+                    {% else %}
+                        Sem avaliações
+                    {% endif %}
+                </p>
+            </article>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Nenhum produto encontrado para "<b>{{ query }}</b>".</p>
+{% endif %}
+{% endblock %}
